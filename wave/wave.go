@@ -61,9 +61,9 @@ func LoadCSV(filename string) []*Wave {
 		d1, _ = strconv.ParseFloat(columns[1], 64)
 		d2, _ = strconv.ParseFloat(columns[2], 64)
 		d3, _ = strconv.ParseFloat(columns[3], 64)
-		dataNs = append(data, d1)
-		dataEw = append(data, d2)
-		dataUd = append(data, d3)
+		dataNs = append(dataNs, d1)
+		dataEw = append(dataEw, d2)
+		dataUd = append(dataUd, d3)
 	}
 }
 
