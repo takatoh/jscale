@@ -19,15 +19,18 @@ func NewWave() *Wave {
 	return p
 }
 
-func LoadCSV(filename string) *Wave {
+func LoadCSV(filename string) []*Wave {
+	var waves []*Wave
 	var reader *csv.Reader
 	var columns []string
 	var err error
-	var wave *Wave
-	var t1, t2, d float64
-	var data []float64
+	var ns, ew, ud *Wave
+	var t1, t2, d1, d2, d3 float64
+	var dataNs, dataEw, dataUd []float64
 
-	wave = NewWave()
+	ns = NewWave()
+	ew = NewWave()
+	ud = NewWave()
 	t1 = 0.0
 	t2 = 0.0
 
@@ -35,18 +38,32 @@ func LoadCSV(filename string) *Wave {
 	reader = csv.NewReader(read_file)
 
 	columns, err = reader.Read()
-	wave.Name = columns[1]
+	ns.Name = columns[1]
+	ew.Name = columns[2]
+	ud.Name = columns[3]
 	for {
 		columns, err = reader.Read()
 		if err == io.EOF {
-			wave.Dt = round(t2 - t1, 2)
-			wave.Data = data
-			return wave
+			dt := round(t1 - t2, 2)
+			ns.Dt = dt
+			ns.Data = dataNs
+			waves = append(waves, ns)
+			ew.Dt = dt
+			ew.Data = dataEw
+			waves = append(waves, ew)
+			ud.Dt = dt
+			ud.Data = dataUd
+			waves = append(waves, ud)
+			return waves
 		}
 		t1 = t2
 		t2, _ = strconv.ParseFloat(columns[0], 64)
-		d, _ = strconv.ParseFloat(columns[1], 64)
-		data = append(data, d)
+		d1, _ = strconv.ParseFloat(columns[1], 64)
+		d2, _ = strconv.ParseFloat(columns[2], 64)
+		d3, _ = strconv.ParseFloat(columns[3], 64)
+		dataNs = append(data, d1)
+		dataEw = append(data, d2)
+		dataUd = append(data, d3)
 	}
 }
 
