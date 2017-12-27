@@ -16,7 +16,8 @@ func main() {
 	csvfile := os.Args[1]
 
 	waves := wave.LoadCSV(csvfile)
-//	dt := waves[0].Dt
+	dt := waves[0].Dt
+//	fmt.Println(dt)
 	n := len(waves[0].Data)
 	nn := int(math.Pow(2.0, math.Ceil(math.Log10(float64(n)) / math.Log10(2.0))))
 
@@ -40,8 +41,10 @@ func main() {
 	sort.Slice(c, func(i, j int) bool {
 		return c[i] > c[j]
 	})
+//	fmt.Println(int(0.3 / dt))
+	a := c[int(0.3 / dt)]
+	I := 2 * math.Log10(a) + 0.94
+	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
 
-	for i := 0; i < nn; i++ {
-		fmt.Println(c[i])
-	}
+	fmt.Printf("計測震度= %.1f\n", I)
 }
