@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-func FFT(x []complex128, nn int, ind, int) []complex128 {
+func FFT(x []complex128, nn int, ind int) []complex128 {
 	var theta float64
 	var i, j, k int
 	var t complex128
