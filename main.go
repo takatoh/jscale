@@ -7,6 +7,7 @@ import (
 	"sort"
 
 	"github.com/takatoh/jscale/wave"
+	"github.com/takatoh/jscale/util"
 )
 
 func main() {
@@ -31,6 +32,16 @@ func main() {
 		y = append(y, complex(0.0, 0.0))
 		z = append(z, complex(0.0, 0.0))
 	}
+
+	x = util.FFT(x, nn, -1)
+	y = util.FFT(y, nn, -1)
+	z = util.FFT(z, nn, -1)
+
+//	filter waves.
+
+	x = util.FFT(x, nn, 1)
+	y = util.FFT(y, nn, 1)
+	z = util.FFT(z, nn, 1)
 
 	for i := 0; i < nn; i++ {
 		xr := real(x[i])
