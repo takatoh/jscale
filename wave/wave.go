@@ -44,7 +44,7 @@ func LoadCSV(filename string) []*Wave {
 	for {
 		columns, err = reader.Read()
 		if err == io.EOF {
-			dt := round(t1 - t2, 2)
+			dt := round(t2 - t1, 2)
 			ns.Dt = dt
 			ns.Data = dataNs
 			waves = append(waves, ns)
