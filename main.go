@@ -20,6 +20,7 @@ Options:
 `, os.Args[0])
 		flag.PrintDefaults()
 	}
+	opt_check := flag.Bool("check", false, "Check FFt result.")
 	flag.Parse()
 
 	var x, y, z []complex128
@@ -47,6 +48,14 @@ Options:
 	x = util.FFT(x, nn, false)
 	y = util.FFT(y, nn, false)
 	z = util.FFT(z, nn, false)
+
+	if *opt_check {
+		x = util.FFT(x, nn, true)
+		for i := 0; i < n; i++ {
+			fmt.Printf("%d,%f,%f\n", i, real(x[i]), imag(x[i]))
+		}
+		os.Exit(0)
+	}
 
 	// フィルタをかける
 	x = util.Filter(x, dt, nn)
