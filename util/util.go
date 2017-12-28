@@ -5,52 +5,40 @@ import (
 	"fmt"
 )
 
-func FFT(x []complex128, nn int, ind int) []complex128 {
-//	fmt.Println(nn)
-
-	var theta float64
-	var i, j, k int
-	var t complex128
-	var tr, ti float64
-	var m, kmax, istep int
-
-	j = 0
-	for i = 0; i < nn; i++ {
-		fmt.Printf("i=%d, j=%d\n", i, j)
-		if i < j {
-			fmt.Println(j)
-			t = x[j]
-			x[j] = x[i]
-			x[i] = t
+func FFT(x []complex128, nn int, inv bool) []complex128 {
+	if inv {
+		for i =0; i < nn; i++ {
+			x[i] = complex(imag(x[i]), real(x[i]))
 		}
-		m = nn / 2
-//		fmt.Printf("m=%d\n", m)
-		for j > m {
-			j = j - m
-			m = m / 2
-			if m < 2 { break }
+		x = fft(x, nn)
+		s := 1.0 / float64(nn)
+		for i := 0; i < nn; i++ {
+			x[i] = complex(imag(x[i]) * s, real(x[i]) * s)
 		}
-		j = j + m
-//		fmt.Printf("j=%d\n", j)
+	} else {
+		x = fft(x, nn)
 	}
-	kmax = 1
-	for kmax < nn {
-//		fmt.Printf("kmax=%d\n", kmax)
-		istep = kmax * 2
-		for k = 0; k < kmax; k++ {
-			theta = math.Pi * float64(ind * (k - 1)) / float64(kmax)
-			for i = k; i < nn; i += istep {
-				j = i + kmax - 1
-//				fmt.Printf("j=%d\n", j)
-				tr = real(x[j]) * math.Cos(theta) - imag(x[j]) * math.Sin(theta)
-				ti = real(x[j]) * math.Sin(theta) + imag(x[j]) * math.Cos(theta)
-				x[j] = complex(real(x[i]) - tr, imag(x[i]) - ti)
-				x[i] = complex(real(x[i]) + tr, imag(x[i]) + ti)
-			}
-		}
-		kmax = istep
-	}
+	return x
+}
 
+func fft(x []complex128, nn int) []complex128 {
+	if nn == 1 {
+		return x
+	}
+	nh = nn / 2
+	even := make([]complex128, nh)
+	odd := make([]complex128, nh)
+	for i := 0; i < nh; i++ {
+		even[i] = x[i] + x[i + nh]
+		odd[i] = (x[i] - x[i + nh]) *
+			cmplx.Exp(complex(0, 2 * float64(i) * math.Pi / float64(nn)))
+	}
+	evne = fft(even)
+	odd = fft(odd)
+	for i := 0; i < nh; i++ {
+		x[2 * i] = even[i]
+		x[2 * i + 1] = odd[i]
+	}
 	return x
 }
 
