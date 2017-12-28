@@ -32,24 +32,20 @@ func main() {
 		z = append(z, complex(0.0, 0.0))
 	}
 
+	// FFT で周波数領域へ
 	x = util.FFT(x, nn, false)
 	y = util.FFT(y, nn, false)
 	z = util.FFT(z, nn, false)
-//	x = util.DFT(x, nn, -1)
-//	y = util.DFT(y, nn, -1)
-//	z = util.DFT(z, nn, -1)
 
-	// filter waves.
+	// フィルタをかける
 	x = util.Filter(x, dt, nn)
 	y = util.Filter(y, dt, nn)
 	z = util.Filter(z, dt, nn)
 
+	// FFT で時間領域に戻す
 	x = util.FFT(x, nn, true)
 	y = util.FFT(y, nn, true)
 	z = util.FFT(z, nn, true)
-//	x = util.DFT(x, nn, 1)
-//	y = util.DFT(y, nn, 1)
-//	z = util.DFT(z, nn, 1)
 
 	for i := 0; i < nn; i++ {
 		xr := real(x[i])
