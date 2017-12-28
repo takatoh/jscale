@@ -2,19 +2,22 @@ package main
 
 import (
 	"fmt"
-	"os"
+//	"os"
 	"math"
 	"sort"
+	"flag"
 
 	"github.com/takatoh/jscale/wave"
 	"github.com/takatoh/jscale/util"
 )
 
 func main() {
+	flag.Parse()
+
 	var x, y, z []complex128
 	var c []float64
 
-	csvfile := os.Args[1]
+	csvfile := flag.Args()[0]
 
 	waves := wave.LoadCSV(csvfile)
 	dt := waves[0].Dt
