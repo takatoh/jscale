@@ -60,9 +60,9 @@ func main() {
 	sort.Slice(c, func(i, j int) bool {	return c[i] > c[j] })
 	a := c[int(0.3 / dt)]
 	I := 2 * math.Log10(a) + 0.94
-	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
+//	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
 
-	fmt.Printf("計測震度 %.1f\n", I)
+	fmt.Printf("計測震度 %f\n", I)
 	if I < 0.5 {
 		fmt.Println("震度0")
 	} else if I < 1.5 {
