@@ -33,15 +33,25 @@ func main() {
 		z = append(z, complex(0.0, 0.0))
 	}
 
-	x = util.FFT(x, nn, -1)
-	y = util.FFT(y, nn, -1)
-	z = util.FFT(z, nn, -1)
+//	x = util.FFT(x, nn, -1)
+//	y = util.FFT(y, nn, -1)
+//	z = util.FFT(z, nn, -1)
+	x = util.DFT(x, nn, -1)
+	y = util.DFT(y, nn, -1)
+	z = util.DFT(z, nn, -1)
 
 //	filter waves.
 
-	x = util.FFT(x, nn, 1)
-	y = util.FFT(y, nn, 1)
-	z = util.FFT(z, nn, 1)
+//	x = util.FFT(x, nn, 1)
+//	y = util.FFT(y, nn, 1)
+//	z = util.FFT(z, nn, 1)
+	x = util.DFT(x, nn, 1)
+	y = util.DFT(y, nn, 1)
+	z = util.DFT(z, nn, 1)
+
+//	for i := 0; i < n; i++ {
+//		fmt.Printf("x=%f, %f\n", real(x[i]), imag(x[i]))
+//	}
 
 	for i := 0; i < nn; i++ {
 		xr := real(x[i])
