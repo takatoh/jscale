@@ -41,6 +41,9 @@ func main() {
 	z = util.DFT(z, nn, -1)
 
 //	filter waves.
+	x = util.Filter(x, dt, nn)
+	y = util.Filter(y, dt, nn)
+	z = util.Filter(z, dt, nn)
 
 //	x = util.FFT(x, nn, 1)
 //	y = util.FFT(y, nn, 1)
