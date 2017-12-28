@@ -2,12 +2,12 @@ package util
 
 import (
 	"math"
-	"fmt"
+	"math/cmplx"
 )
 
 func FFT(x []complex128, nn int, inv bool) []complex128 {
 	if inv {
-		for i =0; i < nn; i++ {
+		for i := 0; i < nn; i++ {
 			x[i] = complex(imag(x[i]), real(x[i]))
 		}
 		x = fft(x, nn)
@@ -25,7 +25,7 @@ func fft(x []complex128, nn int) []complex128 {
 	if nn == 1 {
 		return x
 	}
-	nh = nn / 2
+	nh := nn / 2
 	even := make([]complex128, nh)
 	odd := make([]complex128, nh)
 	for i := 0; i < nh; i++ {
@@ -33,8 +33,8 @@ func fft(x []complex128, nn int) []complex128 {
 		odd[i] = (x[i] - x[i + nh]) *
 			cmplx.Exp(complex(0, 2 * float64(i) * math.Pi / float64(nn)))
 	}
-	evne = fft(even)
-	odd = fft(odd)
+	even = fft(even, nh)
+	odd = fft(odd, nh)
 	for i := 0; i < nh; i++ {
 		x[2 * i] = even[i]
 		x[2 * i + 1] = odd[i]
