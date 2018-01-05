@@ -8,8 +8,8 @@ import (
 	"flag"
 
 	"github.com/takatoh/jscale/wave"
-	"github.com/takatoh/jscale/util"
 	"github.com/takatoh/jscale/fft"
+	"github.com/takatoh/jscale/filter"
 )
 
 func main() {
@@ -59,9 +59,9 @@ Options:
 	}
 
 	// フィルタをかける
-	x = util.Filter(x, dt, nn)
-	y = util.Filter(y, dt, nn)
-	z = util.Filter(z, dt, nn)
+	x = filter.Filter(x, dt, nn)
+	y = filter.Filter(y, dt, nn)
+	z = filter.Filter(z, dt, nn)
 
 	// FFT で時間領域に戻す
 	x = fft.FFT(x, nn, true)
