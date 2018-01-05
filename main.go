@@ -12,6 +12,10 @@ import (
 	"github.com/takatoh/jscale/filter"
 )
 
+const (
+	progVersion = "v0.1.0"
+)
+
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr,
@@ -22,7 +26,13 @@ Options:
 		flag.PrintDefaults()
 	}
 	opt_check := flag.Bool("check", false, "Check FFt result.")
+	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
+
+	if *opt_version {
+		fmt.Println(progVersion)
+		os.Exit(0)
+	}
 
 	var x, y, z []complex128
 	var c []float64
