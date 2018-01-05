@@ -8,12 +8,12 @@ import (
 func FFT(x []complex128, nn int, inv bool) []complex128 {
 	if inv {
 		for i := 0; i < nn; i++ {
-			x[i] = complex(imag(x[i]), real(x[i]))
+			x[i] = complex(real(x[i]), -1.0 * imag(x[i]))
 		}
 		x = fft(x, nn)
 		s := 1.0 / float64(nn)
 		for i := 0; i < nn; i++ {
-			x[i] = complex(imag(x[i]) * s, real(x[i]) * s)
+			x[i] = complex(real(x[i]) * s, -1.0 * imag(x[i]) * s)
 		}
 	} else {
 		x = fft(x, nn)
