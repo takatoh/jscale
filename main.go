@@ -51,7 +51,7 @@ Options:
 	z = fft.FFT(z, nn, false)
 
 	if *opt_check {
-		x = util.FFT(x, nn, true)
+		x = fft.FFT(x, nn, true)
 		for i := 0; i < n; i++ {
 			fmt.Printf("%d,%f,%f\n", i, real(x[i]), imag(x[i]))
 		}
