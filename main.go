@@ -9,6 +9,7 @@ import (
 
 	"github.com/takatoh/jscale/wave"
 	"github.com/takatoh/jscale/util"
+	"github.com/takatoh/jscale/fft"
 )
 
 func main() {
@@ -45,9 +46,9 @@ Options:
 	}
 
 	// FFT で周波数領域へ
-	x = util.FFT(x, nn, false)
-	y = util.FFT(y, nn, false)
-	z = util.FFT(z, nn, false)
+	x = fft.FFT(x, nn, false)
+	y = fft.FFT(y, nn, false)
+	z = fft.FFT(z, nn, false)
 
 	if *opt_check {
 		x = util.FFT(x, nn, true)
@@ -63,9 +64,9 @@ Options:
 	z = util.Filter(z, dt, nn)
 
 	// FFT で時間領域に戻す
-	x = util.FFT(x, nn, true)
-	y = util.FFT(y, nn, true)
-	z = util.FFT(z, nn, true)
+	x = fft.FFT(x, nn, true)
+	y = fft.FFT(y, nn, true)
+	z = fft.FFT(z, nn, true)
 
 	for i := 0; i < nn; i++ {
 		xr := real(x[i])
