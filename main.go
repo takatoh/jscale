@@ -25,7 +25,6 @@ Options:
 `, os.Args[0])
 		flag.PrintDefaults()
 	}
-	opt_check := flag.Bool("check", false, "Check FFT result.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
 
@@ -59,14 +58,6 @@ Options:
 	x = fft.FFT(x, nn)
 	y = fft.FFT(y, nn)
 	z = fft.FFT(z, nn)
-
-	if *opt_check {
-		x = fft.IFFT(x, nn)
-		for i := 0; i < n; i++ {
-			fmt.Printf("%d,%f,%f\n", i, real(x[i]), imag(x[i]))
-		}
-		os.Exit(0)
-	}
 
 	// フィルタをかける
 	x = filter.Filter(x, dt, nn)
