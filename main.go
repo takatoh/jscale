@@ -7,8 +7,8 @@ import (
 	"sort"
 	"flag"
 
+	"github.com/takatoh/fft"
 	"github.com/takatoh/jscale/wave"
-	"github.com/takatoh/jscale/fft"
 	"github.com/takatoh/jscale/filter"
 )
 
@@ -56,12 +56,12 @@ Options:
 	}
 
 	// FFT で周波数領域へ
-	x = fft.FFT(x, nn, false)
-	y = fft.FFT(y, nn, false)
-	z = fft.FFT(z, nn, false)
+	x = fft.FFT(x, nn)
+	y = fft.FFT(y, nn)
+	z = fft.FFT(z, nn)
 
 	if *opt_check {
-		x = fft.FFT(x, nn, true)
+		x = fft.IFFT(x, nn)
 		for i := 0; i < n; i++ {
 			fmt.Printf("%d,%f,%f\n", i, real(x[i]), imag(x[i]))
 		}
@@ -74,9 +74,9 @@ Options:
 	z = filter.Filter(z, dt, nn)
 
 	// FFT で時間領域に戻す
-	x = fft.FFT(x, nn, true)
-	y = fft.FFT(y, nn, true)
-	z = fft.FFT(z, nn, true)
+	x = fft.IFFT(x, nn)
+	y = fft.IFFT(y, nn)
+	z = fft.IFFT(z, nn)
 
 	for i := 0; i < nn; i++ {
 		xr := real(x[i])
