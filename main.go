@@ -25,7 +25,7 @@ Options:
 `, os.Args[0])
 		flag.PrintDefaults()
 	}
-	opt_check := flag.Bool("check", false, "Check FFt result.")
+	opt_check := flag.Bool("check", false, "Check FFT result.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
 
