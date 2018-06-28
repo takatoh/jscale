@@ -4,7 +4,7 @@
 
 ## Install
 
-``` get install github.com/takatoh/jscale```
+``` go install github.com/takatoh/jscale```
 
 ## Usage
 
@@ -29,4 +29,5 @@ Time,NS,EW,UD
 ``` jscale example.csv```
 
 ## License
+
 MIT License
