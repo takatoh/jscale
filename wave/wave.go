@@ -14,7 +14,7 @@ type Wave struct {
 	Data []float64
 }
 
-func NewWave() *Wave {
+func newWave() *Wave {
 	p := new(Wave)
 	return p
 }
@@ -28,9 +28,9 @@ func LoadCSV(filename string) []*Wave {
 	var t1, t2, d1, d2, d3 float64
 	var dataNs, dataEw, dataUd []float64
 
-	ns = NewWave()
-	ew = NewWave()
-	ud = NewWave()
+	ns = newWave()
+	ew = newWave()
+	ud = newWave()
 	t1 = 0.0
 	t2 = 0.0
 
