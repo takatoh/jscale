@@ -79,3 +79,14 @@ func round(val float64, places int) float64 {
 	}
 	return round / pow
 }
+
+func LoadKNET(basename string) []*Wave {
+	var waves []*Wave
+	var dirs = []string{ "EW", "NS", "UD" }
+
+	for _, dir := range dirs {
+		waves = append(waves, loadKnetWave(basename, dir))
+	}
+
+	return waves
+}
