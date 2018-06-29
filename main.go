@@ -20,9 +20,11 @@ func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr,
 `Usage:
-  %s [option] <wave.csv>
+  %s <wavefile.csv>
+  %s -knet <wavefile>
+
 Options:
-`, os.Args[0])
+`, os.Args[0], os.Args[0])
 		flag.PrintDefaults()
 	}
 	opt_knet := flag.Bool("knet", false, "Load KNET waves.")
