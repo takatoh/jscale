@@ -25,6 +25,7 @@ Options:
 `, os.Args[0])
 		flag.PrintDefaults()
 	}
+	opt_knet := flag.Bool("knet", false, "Load KNET waves.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
 
@@ -38,7 +39,13 @@ Options:
 
 	csvfile := flag.Args()[0]
 
-	waves := wave.LoadCSV(csvfile)
+	var waves []*wave.Wave
+	if *opt_knet {
+		waves = wave.LoadKNET(csvfile)
+	} else {
+		waves := wave.LoadCSV(csvfile)
+	}
+
 	dt := waves[0].Dt
 	n := len(waves[0].Data)
 	nn := int(math.Pow(2.0, math.Ceil(math.Log10(float64(n)) / math.Log10(2.0))))
