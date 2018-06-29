@@ -101,11 +101,7 @@ func loadKnetWave(basename, dir string) *Wave {
 	wave := newWave()
 	data := make([]float64, 0)
 
-	f, err := os.Open(basename + "." + dir)
-	if err != nil {
-		fmt.Println("Cannot open file.")
-		os.Exit(1)
-	}
+	f, _ := os.Open(basename + "." + dir)
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
