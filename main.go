@@ -43,7 +43,7 @@ Options:
 	if *opt_knet {
 		waves = wave.LoadKNET(csvfile)
 	} else {
-		waves := wave.LoadCSV(csvfile)
+		waves = wave.LoadCSV(csvfile)
 	}
 
 	dt := waves[0].Dt
