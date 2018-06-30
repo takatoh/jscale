@@ -75,7 +75,7 @@ Options:
 		zr := real(z[i])
 		c = append(c, math.Sqrt(xr * xr + yr * yr + zr * zr))
 	}
-	sort.Slice(c, func(i, j int) bool {	return c[i] > c[j] })
+	sort.Slice(c, func(i, j int) bool { return c[i] > c[j] })
 	a := c[int(0.3 / dt)]
 	I := 2 * math.Log10(a) + 0.94
 	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
