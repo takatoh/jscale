@@ -4,7 +4,7 @@
 
 ## Install
 
-``` go install github.com/takatoh/jscale```
+``` go get github.com/takatoh/jscale```
 
 ## Usage
 
