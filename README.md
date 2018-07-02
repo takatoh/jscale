@@ -28,6 +28,12 @@ Time,NS,EW,UD
 
 ``` jscale example.csv```
 
+または、K-NET の強震記録を利用することもできます。K-NET の強震記録は成分ごとにファイルが分かれていて、
+それぞれ example.EW, example.NS, example.UD とすると、拡張子を除いた部分を -knet オプションと
+ともに指定します。
+
+``` jscale -knet example```
+
 ## License
 
 MIT License
