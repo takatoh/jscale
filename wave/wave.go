@@ -22,7 +22,7 @@ func newWave() *Wave {
 	return p
 }
 
-func LoadCSV(filename string) []*Wave {
+func LoadCSV(filename string) ([]*Wave, error) {
 	var waves []*Wave
 	var reader *csv.Reader
 	var columns []string
@@ -37,7 +37,10 @@ func LoadCSV(filename string) []*Wave {
 	t1 = 0.0
 	t2 = 0.0
 
-	read_file, _ := os.Open(filename)
+	read_file, err := os.Open(filename)
+	if err != nil {
+		return waves, err
+	}
 	reader = csv.NewReader(read_file)
 
 	columns, err = reader.Read()
@@ -57,7 +60,7 @@ func LoadCSV(filename string) []*Wave {
 			ud.Dt = dt
 			ud.Data = dataUd
 			waves = append(waves, ud)
-			return waves
+			return waves, nil
 		}
 		t1 = t2
 		t2, _ = strconv.ParseFloat(columns[0], 64)
@@ -83,24 +86,31 @@ func round(val float64, places int) float64 {
 	return round / pow
 }
 
-func LoadKNET(basename string) []*Wave {
+func LoadKNET(basename string) ([]*Wave, error) {
 	var waves []*Wave
 	var dirs = []string{ "EW", "NS", "UD" }
 
 	for _, dir := range dirs {
-		waves = append(waves, loadKnetWave(basename, dir))
+		wave, err := loadKnetWave(basename, dir)
+		if err != nil {
+			return waves, err
+		}
+		waves = append(waves, wave)
 	}
 
-	return waves
+	return waves, nil
 }
 
-func loadKnetWave(basename, dir string) *Wave {
+func loadKnetWave(basename, dir string) (*Wave, error) {
 	var dt float64
 	var scaleFactor float64
 	wave := newWave()
 	data := make([]float64, 0)
 
-	f, _ := os.Open(basename + "." + dir)
+	f, err := os.Open(basename + "." + dir)
+	if err != nil {
+		return wave, err
+	}
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
@@ -137,5 +147,5 @@ func loadKnetWave(basename, dir string) *Wave {
 	wave.Name = dir
 	wave.Dt = dt
 	wave.Data = data
-	return wave
+	return wave, nil
 }
