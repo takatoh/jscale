@@ -37,7 +37,7 @@ func LoadCSV(filename string) []*Wave {
 	t1 = 0.0
 	t2 = 0.0
 
-	read_file, _ := os.OpenFile(filename, os.O_RDONLY, 0600)
+	read_file, _ := os.Open(filename)
 	reader = csv.NewReader(read_file)
 
 	columns, err = reader.Read()
