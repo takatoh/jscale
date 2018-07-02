@@ -42,10 +42,19 @@ Options:
 	csvfile := flag.Args()[0]
 
 	var waves []*wave.Wave
+	var err error
 	if *opt_knet {
-		waves = wave.LoadKNET(csvfile)
+		waves, err = wave.LoadKNET(csvfile)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+			os.Exit(1)
+		}
 	} else {
-		waves = wave.LoadCSV(csvfile)
+		waves, err = wave.LoadCSV(csvfile)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+			os.Exit(1)
+		}
 	}
 
 	dt := waves[0].Dt
