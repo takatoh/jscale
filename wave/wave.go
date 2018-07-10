@@ -88,7 +88,7 @@ func round(val float64, places int) float64 {
 
 func LoadKNET(basename string) ([]*Wave, error) {
 	var waves []*Wave
-	var dirs = []string{ "EW", "NS", "UD" }
+	var dirs = []string{ "NS", "EW", "UD" }
 
 	for _, dir := range dirs {
 		wave, err := loadKnetWave(basename, dir)
