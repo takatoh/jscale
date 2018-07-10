@@ -117,14 +117,14 @@ func calcIntensity(ns, ew, ud *wave.Wave) float64 {
 	y = fft.IFFT(y, nn)
 	z = fft.IFFT(z, nn)
 
-	for i := 0; i < nn; i++ {
+	for i := 0; i < n; i++ {
 		xr := real(x[i])
 		yr := real(y[i])
 		zr := real(z[i])
 		c = append(c, math.Sqrt(xr * xr + yr * yr + zr * zr))
 	}
 	sort.Slice(c, func(i, j int) bool { return c[i] > c[j] })
-	a = c[int(0.3 / dt)]
+	a = c[int(0.3 / dt) - 1]
 	I = 2.0 * math.Log10(a) + 0.94
 	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
 
