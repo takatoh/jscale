@@ -42,16 +42,12 @@ Options:
 	var err error
 	if *opt_knet {
 		waves, err = wave.LoadKNET(csvfile)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error: %s\n", err)
-			os.Exit(1)
-		}
 	} else {
 		waves, err = wave.LoadCSV(csvfile)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error: %s\n", err)
-			os.Exit(1)
-		}
+	}
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+		os.Exit(1)
 	}
 
 	I := calcIntensity(waves[0], waves[1], waves[2])
