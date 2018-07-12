@@ -128,5 +128,5 @@ func calcIntensity(ns, ew, ud *wave.Wave) float64 {
 	I = 2.0 * math.Log10(a) + 0.94
 	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
 
-	return I	
+	return I
 }
