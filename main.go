@@ -36,14 +36,14 @@ Options:
 		os.Exit(0)
 	}
 
-	csvfile := flag.Args()[0]
+	filename := flag.Args()[0]
 
 	var waves []*wave.Wave
 	var err error
 	if *opt_knet {
-		waves, err = wave.LoadKNET(csvfile)
+		waves, err = wave.LoadKNET(filename)
 	} else {
-		waves, err = wave.LoadCSV(csvfile)
+		waves, err = wave.LoadCSV(filename)
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
@@ -78,7 +78,7 @@ Options:
 
 func calcIntensity(ns, ew, ud *wave.Wave) float64 {
 	var x, y, z []complex128
-	var c []float64
+	var v []float64
 	var dt float64
 	var n, nn int
 	var a, I float64
@@ -117,10 +117,10 @@ func calcIntensity(ns, ew, ud *wave.Wave) float64 {
 		xr := real(x[i])
 		yr := real(y[i])
 		zr := real(z[i])
-		c = append(c, math.Sqrt(xr * xr + yr * yr + zr * zr))
+		v = append(v, math.Sqrt(xr * xr + yr * yr + zr * zr))
 	}
-	sort.Slice(c, func(i, j int) bool { return c[i] > c[j] })
-	a = c[int(0.3 / dt) - 1]
+	sort.Slice(v, func(i, j int) bool { return v[i] > v[j] })
+	a = v[int(0.3 / dt) - 1]
 	I = 2.0 * math.Log10(a) + 0.94
 	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
 
