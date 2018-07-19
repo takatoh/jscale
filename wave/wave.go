@@ -41,8 +41,9 @@ func LoadCSV(filename string) ([]*Wave, error) {
 	if err != nil {
 		return waves, err
 	}
-	reader = csv.NewReader(read_file)
+	defer read_file.Close()
 
+	reader = csv.NewReader(read_file)
 	columns, err = reader.Read()
 	ns.Name = columns[1]
 	ew.Name = columns[2]
