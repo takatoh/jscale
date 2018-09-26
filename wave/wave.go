@@ -150,3 +150,61 @@ func loadKnetWave(basename, dir string) (*Wave, error) {
 	wave.Data = data
 	return wave, nil
 }
+
+func LoadJMA(filename string) ([]*Wave, error) {
+	var waves []*Wave
+	var ns, ew, ud *Wave
+	var dt float64
+	var dataNS, dataEW, dataUD []float64
+
+	ns = newWave()
+	ns.Name = "NS"
+	ew = newWave()
+	ew.Name = "EW"
+	ud = newWave()
+	ud.Name = "UD"
+
+	f, err := os.Open(filename)
+	if err != nil {
+		return waves, err
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.Index(line, " NS,EW,UD") == 0 {
+			break
+		}
+		if strings.Index(line, " SAMPLING RATE") == 0 {
+			srb := regexp.MustCompile(`\d+`).Find([]byte(line))
+			sr, _ := strconv.ParseFloat(string(srb), 64)
+			dt = 1.0 / sr
+		}
+	}
+	ns.Dt = dt
+	ew.Dt = dt
+	ud.Dt = dt
+
+	reader := csv.NewReader(f)
+	for {
+		row, err := reader.Read()
+		if err == io.EOF {
+			ns.Data = dataNS
+			waves = append(waves, ns)
+			ew.Data = dataEW
+			waves = append(waves, ew)
+			ud.Data = dataEW
+			waves = append(waves, ud)
+			break
+		}
+		d0, _ := strconv.ParseFloat(row[0], 64)
+		dataNS = append(dataNS, d0)
+		d1, _ := strconv.ParseFloat(row[1], 64)
+		dataEW = append(dataEW, d1)
+		d2, _ := strconv.ParseFloat(row[2], 64)
+		dataUD = append(dataUD, d2)
+	}
+
+	return waves, nil
+}
