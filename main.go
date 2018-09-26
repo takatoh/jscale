@@ -27,6 +27,7 @@ Options:
 `, os.Args[0], os.Args[0])
 		flag.PrintDefaults()
 	}
+	opt_jma := flag.Bool("jma", false, "Load JMA waves.")
 	opt_knet := flag.Bool("knet", false, "Load KNET waves.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
@@ -40,7 +41,9 @@ Options:
 
 	var waves []*wave.Wave
 	var err error
-	if *opt_knet {
+	if *opt_jma {
+		waves, err = wave.LoadJMA(filename)
+	} else if *opt_knet {
 		waves, err = wave.LoadKNET(filename)
 	} else {
 		waves, err = wave.LoadCSV(filename)
