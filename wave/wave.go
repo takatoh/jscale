@@ -201,7 +201,7 @@ func LoadJMA(filename string) ([]*Wave, error) {
 			ew.Data = dataEW
 			waves = append(waves, ew)
 			ud.Dt = dt
-			ud.Data = dataEW
+			ud.Data = dataUD
 			waves = append(waves, ud)
 			break
 		}
