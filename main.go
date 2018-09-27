@@ -21,10 +21,11 @@ func main() {
 		fmt.Fprintf(os.Stderr,
 `Usage:
   %s <wavefile.csv>
+  %s -jma <wavefile.txt>
   %s -knet <wavefile>
 
 Options:
-`, os.Args[0], os.Args[0])
+`, os.Args[0], os.Args[0], os.Args[0])
 		flag.PrintDefaults()
 	}
 	opt_jma := flag.Bool("jma", false, "Load JMA waves.")
