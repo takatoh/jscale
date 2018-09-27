@@ -29,7 +29,6 @@ Options:
 	}
 	opt_jma := flag.Bool("jma", false, "Load JMA waves.")
 	opt_knet := flag.Bool("knet", false, "Load KNET waves.")
-	opt_dump := flag.Bool("dump", false, "Dump waves.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
 
@@ -52,13 +51,6 @@ Options:
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
-	}
-
-	if *opt_dump {
-		for i := 0; i < len(waves[0].Data); i++ {
-			fmt.Printf("%f,%f,%f\n", waves[0].Data[i], waves[1].Data[i], waves[2].Data[i])
-		}
-		os.Exit(0)
 	}
 
 	I := calcIntensity(waves[0], waves[1], waves[2])
