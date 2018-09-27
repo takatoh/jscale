@@ -29,6 +29,7 @@ Options:
 	}
 	opt_jma := flag.Bool("jma", false, "Load JMA waves.")
 	opt_knet := flag.Bool("knet", false, "Load KNET waves.")
+	opt_dump := flag.Bool("dump", false, "Dump waves.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
 
@@ -51,6 +52,14 @@ Options:
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
+	}
+//	fmt.Println(len(waves[0].Data))
+
+	if *opt_dump {
+		for i := 0; i < len(waves[0].Data); i++ {
+			fmt.Printf("%f,%f,%f\n", waves[0].Data[i], waves[1].Data[i], waves[2].Data[i])
+		}
+		os.Exit(0)
 	}
 
 	I := calcIntensity(waves[0], waves[1], waves[2])
@@ -123,6 +132,7 @@ func calcIntensity(ns, ew, ud *wave.Wave) float64 {
 		v = append(v, math.Sqrt(xr * xr + yr * yr + zr * zr))
 	}
 	sort.Slice(v, func(i, j int) bool { return v[i] > v[j] })
+//	fmt.Println(int(0.3 / dt) - 1)
 	a = v[int(0.3 / dt) - 1]
 	I = 2.0 * math.Log10(a) + 0.94
 	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
