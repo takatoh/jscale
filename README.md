@@ -28,9 +28,13 @@ Time,NS,EW,UD
 
 ``` jscale example.csv```
 
-または、K-NET の強震記録を利用することもできます。K-NET の強震記録は成分ごとにファイルが分かれていて、
-それぞれ example.EW, example.NS, example.UD とすると、拡張子を除いた部分を -knet オプションと
-ともに指定します。
+または、気象庁や K-NET の強震記録を利用することもできます。
+気象庁の強震記録を利用する場合は、-jma オプションを付けて次のように実行します。
+
+``` jscale -jma example.txt```
+
+K-NET の強震記録は成分ごとにファイルが分かれていて、それぞれ example.EW, example.NS, 
+example.UD とすると、拡張子を除いた部分を -knet オプションとともに指定します。
 
 ``` jscale -knet example```
 
