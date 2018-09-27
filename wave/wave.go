@@ -9,7 +9,6 @@ import (
 	"strings"
 	"regexp"
 	"math"
-//	"fmt"
 )
 
 type Wave struct {
@@ -172,27 +171,9 @@ func LoadJMA(filename string) ([]*Wave, error) {
 	}
 	defer f.Close()
 
-//	scanner := bufio.NewScanner(f)
-//	for scanner.Scan() {
-//		line := scanner.Text()
-//		if strings.Index(line, " NS,EW,UD") == 0 {
-//			break
-//		}
-//		if strings.Index(line, " SAMPLING RATE") == 0 {
-//			srb := regexp.MustCompile(`\d+`).Find([]byte(line))
-//			sr, _ := strconv.ParseFloat(string(srb), 64)
-//			dt = 1.0 / sr
-//		}
-//	}
-//	ns.Dt = dt
-//	ew.Dt = dt
-//	ud.Dt = dt
-
 	reader := csv.NewReader(f)
 	for {
-//		fmt.Println(flg)
 		row, err := reader.Read()
-//		fmt.Printf("%#v\n", row)
 		if err == io.EOF {
 			ns.Dt = dt
 			ns.Data = dataNS
@@ -206,7 +187,6 @@ func LoadJMA(filename string) ([]*Wave, error) {
 			break
 		}
 		if flg {
-//			fmt.Printf("%v\n", row)
 			d0, _ := strconv.ParseFloat(row[0], 64)
 			dataNS = append(dataNS, d0)
 			d1, _ := strconv.ParseFloat(row[1], 64)
@@ -215,7 +195,6 @@ func LoadJMA(filename string) ([]*Wave, error) {
 			dataUD = append(dataUD, d2)
 		}
 		if strings.Index(row[0], " NS") == 0 {
-//			fmt.Println("End of header!")
 			flg = true
 		}
 		if strings.Index(row[0], " SAMPLING RATE") == 0 {

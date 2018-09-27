@@ -53,7 +53,6 @@ Options:
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
 	}
-//	fmt.Println(len(waves[0].Data))
 
 	if *opt_dump {
 		for i := 0; i < len(waves[0].Data); i++ {
