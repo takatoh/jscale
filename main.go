@@ -127,7 +127,6 @@ func calcIntensity(ns, ew, ud *wave.Wave) float64 {
 		v = append(v, math.Sqrt(xr * xr + yr * yr + zr * zr))
 	}
 	sort.Slice(v, func(i, j int) bool { return v[i] > v[j] })
-//	fmt.Println(int(0.3 / dt) - 1)
 	a = v[int(0.3 / dt) - 1]
 	I = 2.0 * math.Log10(a) + 0.94
 	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
