@@ -89,7 +89,10 @@ func calcIntensity(ns, ew, ud *wave.Wave) float64 {
 
 	dt = ns.Dt
 	n = len(ns.Data)
-	nn = int(math.Pow(2.0, math.Ceil(math.Log10(float64(n)) / math.Log10(2.0))))
+	nn = 2
+	for nn < n {
+		nn = nn * 2
+	}
 
 	for i := 0; i < n; i++ {
 		x = append(x, complex(ns.Data[i], 0.0))
