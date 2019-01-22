@@ -9,7 +9,7 @@ func Filter(x []complex128, dt float64, nn int) []complex128 {
 	var f, y float64
 	var f1, f2, f3 float64
 
-	nfold = nn / 2 + 1
+	nfold = nn / 2
 
 	x[0] = complex(0.0, 0.0)
 	for i = 1; i < nfold; i++ {
@@ -22,7 +22,7 @@ func Filter(x []complex128, dt float64, nn int) []complex128 {
 		x[nn - i] = complex(real(x[i]), -1.0 * imag(x[i]))
 	}
 
-	f = float64(nfold - 1) / float64(nn) / dt
+	f = float64(nfold) / float64(nn) / dt
 	y = f / 10.0
 	f1 = filter1(f)
 	f2 = filter2(y)
