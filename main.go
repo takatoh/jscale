@@ -8,7 +8,7 @@ import (
 	"flag"
 
 	"github.com/takatoh/fft"
-	"github.com/takatoh/jscale/wave"
+	"github.com/takatoh/seismicwave"
 	"github.com/takatoh/jscale/filter"
 )
 
@@ -40,14 +40,14 @@ Options:
 
 	filename := flag.Args()[0]
 
-	var waves []*wave.Wave
+	var waves []*seismicwave.Wave
 	var err error
 	if *opt_jma {
-		waves, err = wave.LoadJMA(filename)
+		waves, err = seismicwave.LoadJMA(filename)
 	} else if *opt_knet {
-		waves, err = wave.LoadKNET(filename)
+		waves, err = seismicwave.LoadKNETSet(filename)
 	} else {
-		waves, err = wave.LoadCSV(filename)
+		waves, err = seismicwave.LoadCSV(filename)
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
@@ -80,7 +80,7 @@ Options:
 	}
 }
 
-func calcIntensity(ns, ew, ud *wave.Wave) float64 {
+func calcIntensity(ns, ew, ud *seismicwave.Wave) float64 {
 	var x, y, z []complex128
 	var v []float64
 	var dt float64
