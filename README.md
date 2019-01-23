@@ -33,7 +33,7 @@ Time,NS,EW,UD
 
 ``` jscale -jma example.txt```
 
-K-NET の強震記録は成分ごとにファイルが分かれていて、それぞれ example.EW, example.NS, 
+K-NET の強震記録は成分ごとにファイルが分かれていて、それぞれ example.NS, example.EW, 
 example.UD とすると、拡張子を除いた部分を -knet オプションとともに指定します。
 
 ``` jscale -knet example```
