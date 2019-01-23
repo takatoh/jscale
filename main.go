@@ -23,13 +23,15 @@ func main() {
   %s <wavefile.csv>
   %s -jma <wavefile.txt>
   %s -knet <wavefile>
+  %s -fixed <input.toml>
 
 Options:
-`, os.Args[0], os.Args[0], os.Args[0])
+`, os.Args[0], os.Args[0], os.Args[0], os.Args[0])
 		flag.PrintDefaults()
 	}
 	opt_jma := flag.Bool("jma", false, "Load JMA waves.")
 	opt_knet := flag.Bool("knet", false, "Load KNET waves.")
+	opt_fixed := flag.Bool("fixed", false, "Load fixed format waves.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
 
@@ -46,6 +48,8 @@ Options:
 		waves, err = seismicwave.LoadJMA(filename)
 	} else if *opt_knet {
 		waves, err = seismicwave.LoadKNETSet(filename)
+	} else if *opt_fixed {
+		waves, err = seismicwave.LoadFixedFormatWithTOML(filename)
 	} else {
 		waves, err = seismicwave.LoadCSV(filename)
 	}
