@@ -3,6 +3,8 @@
 *.xlsx
 *.xlsm
 *.txt
+*.dat
 *.NS
 *.EW
 *.UD
+*.toml

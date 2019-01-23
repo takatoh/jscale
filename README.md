@@ -38,6 +38,42 @@ example.UD とすると、拡張子を除いた部分を -knet オプション�
 
 ``` jscale -knet example```
 
+固定長フォーマットの加速度記録にも対応しました。固定長フォーマットはパラメータが多いので、
+TOML 形式の入力ファイルを作成します。たとえば次のように：
+
+```
+[[wave]]
+name   = "NS"
+file   = "exmaple.dat"
+format = "10F8.2"
+dt     = 0.01
+ndata  = 12000
+skip   = 2
+
+[[wave]]
+name   = "EW"
+file   = "exmaple.dat"
+format = "10F8.2"
+dt     = 0.01
+ndata  = 12000
+skip   = 1204
+
+[[wave]]
+name   = "UD"
+file   = "exmaple.dat"
+format = "10F8.2"
+dt     = 0.01
+ndata  = 12000
+skip   = 2406
+```
+
+この例では、example.dat が加速度記録のファイルです。dt と ndata はそれぞれ時刻刻みとデータ数です。
+これらが同一の加速度記録が3成分必要です。
+
+実行は次のように -fixed オプションに続けて入力ファイルを指定します。
+
+``` jscale -fixed input.toml```
+
 ## License
 
 MIT License
