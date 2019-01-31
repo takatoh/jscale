@@ -2,6 +2,7 @@ package filter
 
 import (
 	"math"
+	"math/cmplx"
 )
 
 func Filter(x []complex128, dt float64, nn int) []complex128 {
@@ -18,8 +19,8 @@ func Filter(x []complex128, dt float64, nn int) []complex128 {
 		f1 = filter1(f)
 		f2 = filter2(y)
 		f3 = filter3(f)
-		x[i] = complex(f1 * f2 * f3 * real(x[i]), f1 * f2 * f3 * imag(x[i]))
-		x[nn - i] = complex(real(x[i]), -1.0 * imag(x[i]))
+		x[i] = complex(f1 * f2 * f3, 0.0) * x[i]
+		x[nn - i] = cmplx.Conj(x[i])
 	}
 
 	f = float64(nfold) / float64(nn) / dt
@@ -27,7 +28,7 @@ func Filter(x []complex128, dt float64, nn int) []complex128 {
 	f1 = filter1(f)
 	f2 = filter2(y)
 	f3 = filter3(f)
-	x[nfold] = complex(f1 * f2 * f3 * real(x[nfold]), f1 * f2 * f3 * imag(x[nfold]))
+	x[nfold] = complex(f1 * f2 * f3, 0.0) * x[nfold]
 
 	return x
 }
