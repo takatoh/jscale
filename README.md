@@ -4,7 +4,7 @@
 
 ## Install
 
-``` go get github.com/takatoh/jscale```
+    > go get github.com/takatoh/jscale
 
 ## Usage
 
@@ -24,19 +24,20 @@ Time,NS,EW,UD
 0.08,-0.69,-0.22,0.36
 （後略）
 ```
+
 加速度記録のファイルを example.csv とすると、次のように実行します。
 
-``` jscale example.csv```
+    > jscale example.csv
 
 または、気象庁や K-NET の強震記録を利用することもできます。
-気象庁の強震記録を利用する場合は、-jma オプションを付けて実行します。
+気象庁の強震記録を利用する場合は、`-jma` オプションを付けて実行します。
 
-``` jscale -jma example.txt```
+    > jscale -jma example.txt
 
 K-NET の強震記録は成分ごとにファイルが分かれていて、それぞれ example.NS, example.EW, 
-example.UD とすると、拡張子を除いた部分を -knet オプションとともに指定します。
+example.UD とすると、拡張子を除いた部分を `-knet` オプションとともに指定します。
 
-``` jscale -knet example```
+    > jscale -knet example
 
 固定長フォーマットの加速度記録にも対応しました。固定長フォーマットはパラメータが多いので、
 TOML 形式の入力ファイルを作成します。たとえば次のように：
@@ -67,12 +68,12 @@ ndata  = 12000
 skip   = 2406
 ```
 
-この例では、example.dat が加速度記録のファイルです。dt と ndata はそれぞれ時刻刻みとデータ数です。
+この例では、example.dat が加速度記録のファイルです。`dt` と `ndata` はそれぞれ時刻刻みとデータ数です。
 これらが同一の加速度記録が3成分必要です。
 
-実行は次のように -fixed オプションに続けて入力ファイルを指定します。
+実行は次のように `-fixed` オプションに続けて入力ファイルを指定します。
 
-``` jscale -fixed input.toml```
+    > jscale -fixed input.toml
 
 ## License
 
