@@ -4,7 +4,7 @@
 
 ## Install
 
-    > go get github.com/takatoh/jscale
+    > go install github.com/takatoh/jscale@latest
 
 ## Usage
 
