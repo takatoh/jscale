@@ -1,15 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"math"
-	"sort"
 	"flag"
+	"fmt"
+	"math"
+	"os"
+	"sort"
 
 	"github.com/takatoh/fft"
-	"github.com/takatoh/seismicwave"
 	"github.com/takatoh/jscale/filter"
+	"github.com/takatoh/seismicwave"
 )
 
 const (
@@ -19,7 +19,7 @@ const (
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr,
-`Usage:
+			`Usage:
   %s <wavefile.csv>
   %s -jma <wavefile.txt>
   %s -knet <wavefile>
@@ -128,12 +128,12 @@ func calcIntensity(ns, ew, ud *seismicwave.Wave) float64 {
 		xr := real(x[i])
 		yr := real(y[i])
 		zr := real(z[i])
-		v = append(v, math.Sqrt(xr * xr + yr * yr + zr * zr))
+		v = append(v, math.Sqrt(xr*xr+yr*yr+zr*zr))
 	}
 	sort.Slice(v, func(i, j int) bool { return v[i] > v[j] })
-	a = v[int(0.3 / dt) - 1]
-	I = 2.0 * math.Log10(a) + 0.94
-	I = math.Floor(math.Floor(I * 100.0 + 0.5) / 10.0) / 10.0
+	a = v[int(0.3/dt)-1]
+	I = 2.0*math.Log10(a) + 0.94
+	I = math.Floor(math.Floor(I*100.0+0.5)/10.0) / 10.0
 
 	return I
 }
