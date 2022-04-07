@@ -42,7 +42,7 @@ Options:
 		os.Exit(0)
 	}
 
-	filename := flag.Args()[0]
+	filename := flag.Arg(0)
 
 	var waves []*seismicwave.Wave
 	var err error
