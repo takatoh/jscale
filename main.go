@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"path/filepath"
 	"sort"
 
 	"github.com/takatoh/fft"
@@ -17,6 +18,7 @@ const (
 )
 
 func main() {
+	progName := filepath.Base(os.Args[0])
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr,
 			`Usage:
@@ -26,7 +28,7 @@ func main() {
   %s -fixed <input.toml>
 
 Options:
-`, os.Args[0], os.Args[0], os.Args[0], os.Args[0])
+`, progName, progName, progName, progName)
 		flag.PrintDefaults()
 	}
 	opt_jma := flag.Bool("jma", false, "Load JMA waves.")
