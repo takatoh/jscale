@@ -1,6 +1,6 @@
 module github.com/takatoh/jscale
 
-go 1.17
+go 1.20
 
 require (
 	github.com/takatoh/fft v1.0.0
