@@ -2,10 +2,10 @@ package intensity
 
 import (
 	"math"
+	"math/cmplx"
 	"sort"
 
 	"github.com/takatoh/fft"
-	"github.com/takatoh/jscale/filter"
 	"github.com/takatoh/seismicwave"
 )
 
@@ -40,9 +40,9 @@ func Calc(ns, ew, ud *seismicwave.Wave) float64 {
 	z = fft.FFT(z, nn)
 
 	// フィルタをかける
-	x = filter.Filter(x, dt, nn)
-	y = filter.Filter(y, dt, nn)
-	z = filter.Filter(z, dt, nn)
+	x = Filter(x, dt, nn)
+	y = Filter(y, dt, nn)
+	z = Filter(z, dt, nn)
 
 	// FFT で時間領域に戻す
 	x = fft.IFFT(x, nn)
@@ -61,6 +61,52 @@ func Calc(ns, ew, ud *seismicwave.Wave) float64 {
 	I = math.Floor(math.Floor(I*100.0+0.5)/10.0) / 10.0
 
 	return I
+}
+
+func Filter(x []complex128, dt float64, nn int) []complex128 {
+	var nfold, i int
+	var f, y float64
+	var f1, f2, f3 float64
+
+	nfold = nn / 2
+
+	x[0] = complex(0.0, 0.0)
+	for i = 1; i < nfold; i++ {
+		f = float64(i) / float64(nn) / dt
+		y = f / 10.0
+		f1 = filter1(f)
+		f2 = filter2(y)
+		f3 = filter3(f)
+		x[i] = complex(f1*f2*f3, 0.0) * x[i]
+		x[nn-i] = cmplx.Conj(x[i])
+	}
+
+	f = float64(nfold) / float64(nn) / dt
+	y = f / 10.0
+	f1 = filter1(f)
+	f2 = filter2(y)
+	f3 = filter3(f)
+	x[nfold] = complex(f1*f2*f3, 0.0) * x[nfold]
+
+	return x
+}
+
+func filter1(f float64) float64 {
+	return math.Sqrt(1.0 / f)
+}
+
+func filter2(y float64) float64 {
+	return 1.0 / math.Sqrt(1.0+
+		0.694*math.Pow(y, 2.0)+
+		0.241*math.Pow(y, 4.0)+
+		0.0557*math.Pow(y, 6.0)+
+		0.009664*math.Pow(y, 8.0)+
+		0.00134*math.Pow(y, 10.0)+
+		0.000155*math.Pow(y, 12.0))
+}
+
+func filter3(f float64) float64 {
+	return math.Sqrt(1.0 - math.Exp(-1.0*math.Pow(f/0.5, 3.0)))
 }
 
 func Scale(intensity float64) string {
