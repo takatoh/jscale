@@ -13,6 +13,7 @@ const (
 
 func Calc(ns, ew *seismicwave.Wave) []float64 {
 	n := ns.NData()
+	dt := ns.DT()
 	accNs := ns.Data
 	accEw := ew.Data
 	ddy := make([]float64, n)
@@ -27,10 +28,10 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	ts := len(periods)
 	sv := make([]float64, ts)
 	for i := 0; i < ts; i++ {
-		t := 1.6
+		t := periods[i]
 		w := 2.0 * math.Pi / t
-		_, dx, _ := directintegration.Nigam(dumping, w, ns.DT(), n, ddy)
-		vel := seismicwave.Make("vel", ns.DT(), dx)
+		_, dx, _ := directintegration.Nigam(dumping, w, dt, n, ddy)
+		vel := seismicwave.Make("vel", dt, dx)
 		sv[i] = vel.AbsMax()
 	}
 
