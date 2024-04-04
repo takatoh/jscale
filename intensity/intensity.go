@@ -62,3 +62,29 @@ func Calc(ns, ew, ud *seismicwave.Wave) float64 {
 
 	return I
 }
+
+func Scale(intensity float64) string {
+	var scale string
+	if intensity < 0.5 {
+		scale = "震度0"
+	} else if intensity < 1.5 {
+		scale = "震度1"
+	} else if intensity < 2.5 {
+		scale = "震度2"
+	} else if intensity < 3.5 {
+		scale = "震度3"
+	} else if intensity < 4.5 {
+		scale = "震度4"
+	} else if intensity < 5.0 {
+		scale = "震度5弱"
+	} else if intensity < 5.5 {
+		scale = "震度5強"
+	} else if intensity < 6.0 {
+		scale = "震度6弱"
+	} else if intensity < 6.5 {
+		scale = "震度6強"
+	} else {
+		scale = "震度7"
+	}
+	return scale
+}
