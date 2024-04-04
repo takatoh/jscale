@@ -3,6 +3,7 @@ package lpgm
 import (
 	"math"
 
+	"github.com/takatoh/jscale/integral"
 	"github.com/takatoh/sdof/directintegration"
 	"github.com/takatoh/seismicwave"
 )
@@ -20,6 +21,7 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	for i := 0; i < n; i++ {
 		ddy[i] = math.Sqrt(accNs[i]*accNs[i] + accEw[i]*accEw[i])
 	}
+	dy, _ := integral.Iacc(ddy, dt)
 
 	var periods []float64
 	for t := 16; t <= 78; t += 2 {
@@ -31,7 +33,11 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 		t := periods[i]
 		w := 2.0 * math.Pi / t
 		dx := RespSv(dumping, w, dt, n, ddy)
-		vel := seismicwave.Make("vel", dt, dx)
+		dxa := make([]float64, n)
+		for j := 0; j < n; j++ {
+			dxa[j] = dx[j] + dy[j]
+		}
+		vel := seismicwave.Make("vel", dt, dxa)
 		sv[i] = vel.AbsMax()
 	}
 
