@@ -57,7 +57,7 @@ func HPF(acc []float64) []float64 {
 	y := make([]float64, len(acc))
 	y[0], y[1] = 0.0, 0.0
 	for t := 2; t < len(acc); t++ {
-		y[t] = acc[t] + a1*acc[t-1] + a2*acc[t-1] - b1*y[t-1] - b2*y[t-2]
+		y[t] = acc[t] + a1*acc[t-1] + a2*acc[t-2] - b1*y[t-1] - b2*y[t-2]
 		accFilterd[t] = g0 * y[t]
 	}
 
