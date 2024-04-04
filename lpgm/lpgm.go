@@ -21,7 +21,8 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	for i := 0; i < n; i++ {
 		ddy[i] = math.Sqrt(accNs[i]*accNs[i] + accEw[i]*accEw[i])
 	}
-	dy := integrate(ddy, dt)
+	ddyHPF := HPF(ddy)
+	dy := integrate(ddyHPF, dt)
 
 	var periods []float64
 	for t := 16; t <= 78; t += 2 {
