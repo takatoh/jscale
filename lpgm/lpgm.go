@@ -21,7 +21,7 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	for i := 0; i < n; i++ {
 		ddy[i] = math.Sqrt(accNs[i]*accNs[i] + accEw[i]*accEw[i])
 	}
-	dy, _ := integral.Iacc(ddy, dt)
+	dy := integrate(ddy, dt)
 
 	var periods []float64
 	for t := 16; t <= 78; t += 2 {
@@ -42,6 +42,11 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	}
 
 	return sva
+}
+
+func integrate(ddy []float64, dt float64) []float64 {
+	dy, _ := integral.Iacc(ddy, dt)
+	return dy
 }
 
 func RespSv(h, w, dt float64, n int, ddy []float64) []float64 {
