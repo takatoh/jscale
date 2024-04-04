@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/takatoh/jscale/intensity"
 	"github.com/takatoh/seismicwave"
 )
 
@@ -56,7 +57,7 @@ Options:
 		os.Exit(1)
 	}
 
-	I := calcIntensity(waves[0], waves[1], waves[2])
+	I := intensity.Calc(waves[0], waves[1], waves[2])
 
 	fmt.Printf("計測震度 %.1f\n", I)
 	if I < 0.5 {
