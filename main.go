@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 
@@ -62,7 +63,11 @@ Options:
 	if *opt_lpgm {
 		fmt.Println("長周期地震動階級を計算します。")
 		sv := lpgm.Calc(waves[0], waves[1])
-		fmt.Printf("Max Sv = %.1f\n", sv)
+		maxSv := 0.0
+		for i := 0; i < len(sv); i++ {
+			maxSv = math.Max(maxSv, sv[i])
+		}
+		fmt.Printf("Max Sv = %.1f\n", maxSv)
 	} else {
 		I := intensity.Calc(waves[0], waves[1], waves[2])
 
