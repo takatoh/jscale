@@ -7,6 +7,10 @@ import (
 	"github.com/takatoh/seismicwave"
 )
 
+const (
+	dumping = 0.05
+)
+
 func Calc(ns, ew *seismicwave.Wave) []float64 {
 	n := ns.NData()
 	accNs := ns.Data
@@ -25,7 +29,7 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	for i := 0; i < ts; i++ {
 		t := 1.6
 		w := 2.0 * math.Pi / t
-		_, dx, _ := directintegration.Nigam(0.05, w, ns.DT(), n, ddy)
+		_, dx, _ := directintegration.Nigam(dumping, w, ns.DT(), n, ddy)
 		vel := seismicwave.Make("vel", ns.DT(), dx)
 		sv[i] = vel.AbsMax()
 	}
