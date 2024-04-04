@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/takatoh/jscale/intensity"
+	"github.com/takatoh/jscale/lpgm"
 	"github.com/takatoh/seismicwave"
 )
 
@@ -60,6 +61,8 @@ Options:
 
 	if *opt_lpgm {
 		fmt.Println("長周期地震動階級を計算します。")
+		sv := lpgm.Calc(waves[0], waves[1])
+		fmt.Printf("Max Sv = %.1f\n", sv)
 	} else {
 		I := intensity.Calc(waves[0], waves[1], waves[2])
 
