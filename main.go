@@ -61,13 +61,14 @@ Options:
 	}
 
 	if *opt_lpgm {
-		fmt.Println("長周期地震動階級を計算します。")
 		Sva := lpgm.Calc(waves[0], waves[1])
 		maxSva := 0.0
 		for i := 0; i < len(Sva); i++ {
 			maxSva = math.Max(maxSva, Sva[i])
 		}
-		fmt.Printf("Max Sva = %.1f\n", maxSva)
+
+		fmt.Printf("絶対速度応答スペクトルの最大値 %.1f cm/sec\n", maxSva)
+		fmt.Println(lpgm.Scale(maxSva))
 	} else {
 		I := intensity.Calc(waves[0], waves[1], waves[2])
 
