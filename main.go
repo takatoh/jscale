@@ -60,25 +60,5 @@ Options:
 	I := intensity.Calc(waves[0], waves[1], waves[2])
 
 	fmt.Printf("計測震度 %.1f\n", I)
-	if I < 0.5 {
-		fmt.Println("震度0")
-	} else if I < 1.5 {
-		fmt.Println("震度1")
-	} else if I < 2.5 {
-		fmt.Println("震度2")
-	} else if I < 3.5 {
-		fmt.Println("震度3")
-	} else if I < 4.5 {
-		fmt.Println("震度4")
-	} else if I < 5.0 {
-		fmt.Println("震度5弱")
-	} else if I < 5.5 {
-		fmt.Println("震度5強")
-	} else if I < 6.0 {
-		fmt.Println("震度6弱")
-	} else if I < 6.5 {
-		fmt.Println("震度6強")
-	} else {
-		fmt.Println("震度7")
-	}
+	fmt.Printf(intensity.Scale(I))
 }
