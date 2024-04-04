@@ -9,7 +9,7 @@ import (
 	"github.com/takatoh/seismicwave"
 )
 
-func calcIntensity(ns, ew, ud *seismicwave.Wave) float64 {
+func Calc(ns, ew, ud *seismicwave.Wave) float64 {
 	var x, y, z []complex128
 	var v []float64
 	var dt float64
