@@ -30,10 +30,15 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	for i := 0; i < ts; i++ {
 		t := periods[i]
 		w := 2.0 * math.Pi / t
-		_, dx, _ := directintegration.Nigam(dumping, w, dt, n, ddy)
+		dx := RespSv(dumping, w, dt, n, ddy)
 		vel := seismicwave.Make("vel", dt, dx)
 		sv[i] = vel.AbsMax()
 	}
 
 	return sv
+}
+
+func RespSv(h, w, dt float64, n int, ddy []float64) []float64 {
+	_, dx, _ := directintegration.Nigam(h, w, dt, n, ddy)
+	return dx
 }
