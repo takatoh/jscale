@@ -28,7 +28,7 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 		periods = append(periods, float64(t)/10.0)
 	}
 	ts := len(periods)
-	sv := make([]float64, ts)
+	sva := make([]float64, ts)
 	for i := 0; i < ts; i++ {
 		t := periods[i]
 		w := 2.0 * math.Pi / t
@@ -38,10 +38,10 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 			dxa[j] = dx[j] + dy[j]
 		}
 		vel := seismicwave.Make("vel", dt, dxa)
-		sv[i] = vel.AbsMax()
+		sva[i] = vel.AbsMax()
 	}
 
-	return sv
+	return sva
 }
 
 func RespSv(h, w, dt float64, n int, ddy []float64) []float64 {
