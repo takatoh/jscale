@@ -48,3 +48,19 @@ func RespSv(h, w, dt float64, n int, ddy []float64) []float64 {
 	_, dx, _ := directintegration.Nigam(h, w, dt, n, ddy)
 	return dx
 }
+
+func Scale(intensity float64) string {
+	var scale string
+	if intensity < 5.0 {
+		scale = "長周期地震動階級0"
+	} else if intensity < 15.0 {
+		scale = "長周期地震動階級1"
+	} else if intensity < 50.0 {
+		scale = "長周期地震動階級2"
+	} else if intensity < 100.0 {
+		scale = "長周期地震動階級3"
+	} else {
+		scale = "長周期地震動階級4"
+	}
+	return scale
+}
