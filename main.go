@@ -60,5 +60,5 @@ Options:
 	I := intensity.Calc(waves[0], waves[1], waves[2])
 
 	fmt.Printf("計測震度 %.1f\n", I)
-	fmt.Printf(intensity.Scale(I))
+	fmt.Println(intensity.Scale(I))
 }
