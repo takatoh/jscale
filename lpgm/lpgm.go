@@ -17,12 +17,10 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	dt := ns.DT()
 	accNs := ns.Data
 	accEw := ew.Data
-	ddy := make([]float64, n)
-	for i := 0; i < n; i++ {
-		ddy[i] = math.Sqrt(accNs[i]*accNs[i] + accEw[i]*accEw[i])
-	}
-	ddyHPF := HPF(ddy)
-	dy := integrate(ddyHPF, dt)
+	accNsHPF := HPF(accNs)
+	accEwHPF := HPF(accEw)
+	dyNs := integrate(accNsHPF, dt)
+	dyEw := integrate(accEwHPF, dt)
 
 	var periods []float64
 	for t := 16; t <= 78; t += 2 {
@@ -33,10 +31,11 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	for i := 0; i < ts; i++ {
 		t := periods[i]
 		w := 2.0 * math.Pi / t
-		dx := RespSv(dumping, w, dt, n, ddy)
+		dxNs := RespSv(dumping, w, dt, n, accNsHPF)
+		dxEw := RespSv(dumping, w, dt, n, accEwHPF)
 		dxa := make([]float64, n)
 		for j := 0; j < n; j++ {
-			dxa[j] = dx[j] + dy[j]
+			dxa[j] = math.Sqrt(math.Pow(dxNs[j]+dyNs[j], 2.0) + math.Pow(dxEw[j]+dyEw[j], 2.0))
 		}
 		vel := seismicwave.Make("vel", dt, dxa)
 		sva[i] = vel.AbsMax()
