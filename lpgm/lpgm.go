@@ -28,8 +28,8 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	for i := 0; i < ts; i++ {
 		t := periods[i]
 		w := 2.0 * math.Pi / t
-		dxNs := RespSv(dumping, w, dt, n, accNsHPF)
-		dxEw := RespSv(dumping, w, dt, n, accEwHPF)
+		dxNs := RespSv(dumping, w, dt, n, accNs)
+		dxEw := RespSv(dumping, w, dt, n, accEw)
 		dxa := make([]float64, n)
 		for j := 0; j < n; j++ {
 			vaNs := dxNs[j] + dyNs[j]
