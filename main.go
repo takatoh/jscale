@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 
 	"github.com/takatoh/jscale/intensity"
+	"github.com/takatoh/jscale/lpgm"
 	"github.com/takatoh/seismicwave"
 )
 
@@ -19,10 +21,10 @@ func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr,
 			`Usage:
-  %s <wavefile.csv>
-  %s -jma <wavefile.txt>
-  %s -knet <wavefile>
-  %s -fixed <input.toml>
+  %s [-long-period] <wavefile.csv>
+  %s [-long-period] -jma <wavefile.txt>
+  %s [-long-period] -knet <wavefile>
+  %s [-long-period] -fixed <input.toml>
 
 Options:
 `, progName, progName, progName, progName)
@@ -31,6 +33,7 @@ Options:
 	opt_jma := flag.Bool("jma", false, "Load JMA waves.")
 	opt_knet := flag.Bool("knet", false, "Load KNET waves.")
 	opt_fixed := flag.Bool("fixed", false, "Load fixed format waves.")
+	opt_lpgm := flag.Bool("long-period", false, "Caclulate intensity scale on long-period ground motion.")
 	opt_version := flag.Bool("version", false, "Show version.")
 	flag.Parse()
 
@@ -57,8 +60,19 @@ Options:
 		os.Exit(1)
 	}
 
-	I := intensity.Calc(waves[0], waves[1], waves[2])
+	if *opt_lpgm {
+		Sva := lpgm.Calc(waves[0], waves[1])
+		maxSva := 0.0
+		for i := 0; i < len(Sva); i++ {
+			maxSva = math.Max(maxSva, Sva[i])
+		}
 
-	fmt.Printf("計測震度 %.1f\n", I)
-	fmt.Println(intensity.Scale(I))
+		fmt.Printf("絶対速度応答スペクトルの最大値 %.1f cm/sec\n", maxSva)
+		fmt.Println(lpgm.Scale(maxSva))
+	} else {
+		I := intensity.Calc(waves[0], waves[1], waves[2])
+
+		fmt.Printf("計測震度 %.1f\n", I)
+		fmt.Println(intensity.Scale(I))
+	}
 }
