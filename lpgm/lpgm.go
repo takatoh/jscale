@@ -39,8 +39,7 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 			vaEw := dxEw[j] + dyEw[j]
 			dxa[j] = math.Sqrt(vaNs*vaNs + vaEw*vaEw)
 		}
-		vel := seismicwave.Make("vel", dt, dxa)
-		sva[i] = vel.AbsMax()
+		sva[i] = seismicwave.Make("vel", dt, dxa).AbsMax()
 	}
 
 	return sva
