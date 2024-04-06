@@ -65,10 +65,7 @@ Options:
 
 	if *opt_lpgm {
 		Sva := lpgm.Calc(waves[0], waves[1])
-		maxSva := 0.0
-		for i := 0; i < len(Sva); i++ {
-			maxSva = math.Max(maxSva, Sva[i])
-		}
+		maxSva := maxValue(Sva)
 
 		if *opt_spectrum {
 			outputSpectra(lpgm.Periods(), Sva, "spec-lpgm.csv")
@@ -107,4 +104,12 @@ func outputSpectra(periods, responses []float64, filename string) {
 			panic("Error! Can not write to the file")
 		}
 	}
+}
+
+func maxValue(values []float64) float64 {
+	max := 0.0
+	for i := 0; i < len(values); i++ {
+		max = math.Max(max, values[i])
+	}
+	return max
 }
