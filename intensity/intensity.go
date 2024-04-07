@@ -16,11 +16,11 @@ func Calc(ns, ew, ud *seismicwave.Wave) float64 {
 	var n, nn int
 	var a, I float64
 
-	dt = ns.Dt
-	n = len(ns.Data)
+	dt = ns.DT()
+	n = ns.NData()
 	nn = 2
 	for nn < n {
-		nn = nn * 2
+		nn *= 2
 	}
 
 	for i := 0; i < n; i++ {
