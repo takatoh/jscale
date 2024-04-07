@@ -22,17 +22,14 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	dyNs := integrate(accNsHPF, dt)
 	dyEw := integrate(accEwHPF, dt)
 
-	var periods []float64
-	for t := 16; t <= 78; t += 2 {
-		periods = append(periods, float64(t)/10.0)
-	}
+	periods := Periods()
 	ts := len(periods)
 	sva := make([]float64, ts)
 	for i := 0; i < ts; i++ {
 		t := periods[i]
 		w := 2.0 * math.Pi / t
-		dxNs := RespSv(dumping, w, dt, n, accNsHPF)
-		dxEw := RespSv(dumping, w, dt, n, accEwHPF)
+		dxNs := RespSv(dumping, w, dt, n, accNs)
+		dxEw := RespSv(dumping, w, dt, n, accEw)
 		dxa := make([]float64, n)
 		for j := 0; j < n; j++ {
 			vaNs := dxNs[j] + dyNs[j]
@@ -43,6 +40,14 @@ func Calc(ns, ew *seismicwave.Wave) []float64 {
 	}
 
 	return sva
+}
+
+func Periods() []float64 {
+	var periods []float64
+	for t := 16; t <= 78; t += 2 {
+		periods = append(periods, float64(t)/10.0)
+	}
+	return periods
 }
 
 func HPF(acc []float64) []float64 {

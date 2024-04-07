@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/takatoh/fft v1.2.0
-	github.com/takatoh/sdof v0.2.2
+	github.com/takatoh/sdof v0.2.3
 	github.com/takatoh/seismicwave v1.2.0
 )
 
