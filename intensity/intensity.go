@@ -18,21 +18,9 @@ func Calc(ns, ew, ud *seismicwave.Wave) float64 {
 
 	dt = ns.DT()
 	n = ns.NData()
-	nn = 2
-	for nn < n {
-		nn *= 2
-	}
-
-	for i := 0; i < n; i++ {
-		x = append(x, complex(ns.Data[i], 0.0))
-		y = append(y, complex(ew.Data[i], 0.0))
-		z = append(z, complex(ud.Data[i], 0.0))
-	}
-	for i := n; i < nn; i++ {
-		x = append(x, complex(0.0, 0.0))
-		y = append(y, complex(0.0, 0.0))
-		z = append(z, complex(0.0, 0.0))
-	}
+	x, nn = fft.MakeComplexData(ns.Data)
+	y, _ = fft.MakeComplexData(ew.Data)
+	z, _ = fft.MakeComplexData(ud.Data)
 
 	// FFT で周波数領域へ
 	x = fft.FFT(x, nn)
